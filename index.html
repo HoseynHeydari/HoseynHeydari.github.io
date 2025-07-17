@@ -1,110 +1,421 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Music Player</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Players Table View</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #f0f0f0;
-        }
-        .player {
-            background-color: white;
+            font-family: 'Arial', sans-serif;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            display: inline-block;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
         }
+        
+        .players-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .players-table th {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .players-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+        }
+        
+        .players-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .cover-art {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .song-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .song-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .artist {
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .controls button {
+            background: #4CAF50;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .controls button:hover {
+            background: #45a049;
+        }
+        
         audio {
-            margin: 20px 0;
+            width: 200px;
         }
     </style>
 </head>
 <body>
-    <div class="player">
-        <h1>My Music Player</h1>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="1 attack ON titan.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="2 The Reluctant Heroes.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="03 eye-water.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="4 Rittai Kidou.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="5 counter・attack-mankind.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="6 Aramy Attack.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="7 Vogel im Kafig.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="8 DOA.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="9 Kyojin Shinko.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="10 E.M.A.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="11 Megata Kyojin Kuchiku.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="12 Bauklotze.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="13 2 Chi Jou.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="14 XL-TT.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="15 Call your name.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <audio controls autoplay loop>
-            <!-- Replace with your audio file -->
-            <source src="16 omake-pfadlib.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <p>Enjoy the music!</p>
-    </div>
+    <h1>AOT SOT Library</h1>
+    
+    <table class="players-table">
+        <thead>
+            <tr>
+                <th>Cover</th>
+                <th>Song Info</th>
+                <th>Player</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Player 1 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">attack ON titan</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="1 attack ON titan.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 2 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">The Reluctant Heroes</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="2 The Reluctant Heroes.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 3 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">eye-water</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="03 eye-water.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 4 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Rittai Kidou</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="4 Rittai Kidou.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 5 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">counter・attack-mankind</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="5 counter・attack-mankind.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 6 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Aramy Attack</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="6 Aramy Attack.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 7 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Vogel im Kafig</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="7 Vogel im Kafig.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 8 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">DOA</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="8 DOA.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 9 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Kyojin Shinko</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="9 Kyojin Shinko.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 10 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">E.M.A</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="10 E.M.A.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 11 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Megata Kyojin Kuchiku</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="11 Megata Kyojin Kuchiku.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 12 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Bauklotze</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="12 Bauklotze.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 13 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">2 Chi Jou</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="13 2 Chi Jou.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 14 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">XL-TT</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="14 XL-TT.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Player 15 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">Call your name</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player1" controls>
+                        <source src="15 Call your name.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+            
+            <!-- Player 16 -->
+            <tr>
+                <td>
+                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
+                </td>
+                <td>
+                    <div class="song-info">
+                        <div>
+                            <div class="song-title">omake-pfadlib</div>
+                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <audio id="player2" controls>
+                        <source src="16 omake-pfadlib.mp3" type="audio/mpeg">
+                    </audio>
+                </td>
+            </tr>
+
+            <!-- Add more players as needed -->
+        </tbody>
+    </table>
+
+    <script>
+        // You can add JavaScript for more advanced functionality
+        // This simple version uses inline onclick handlers
+    </script>
 </body>
 </html>
