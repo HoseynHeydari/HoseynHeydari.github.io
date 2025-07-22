@@ -1,109 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Track Music Player</title>
+    <title>Advanced Music Player</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background: #f5f5f5;
+            background: #121212;
+            color: #ffffff;
         }
-
         .player-container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: #1e1e1e;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
-
+        .cover-art-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 25px;
+        }
         .cover-art {
-            width: 200px;
-            height: 200px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            border-radius: 5px;
-            margin: 0 auto 20px;
-            display: block;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
-
         .track-info {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
-
+        .song-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .artist {
+            font-size: 16px;
+            color: #b3b3b3;
+        }
+        .progress-container {
+            margin: 25px 0;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #404040;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .progress {
+            height: 100%;
+            background: #1db954;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #b3b3b3;
+        }
         .controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 20px;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
         }
-
-        button {
-            padding: 10px 15px;
+        .control-btn {
+            background: none;
             border: none;
-            border-radius: 5px;
-            background: #4a76a8;
             color: white;
+            font-size: 20px;
             cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.2s;
         }
-
-        button:hover {
-            background: #3a5f8a;
+        .control-btn:hover {
+            background: rgba(255,255,255,0.1);
         }
-
+        .control-btn.large {
+            font-size: 30px;
+        }
+        .skip-btn {
+            font-size: 16px;
+        }
         .playlist {
-            margin-top: 20px;
-            border-top: 1px solid #eee;
+            margin-top: 30px;
+            border-top: 1px solid #333;
             padding-top: 20px;
         }
-
         .playlist-item {
-            padding: 10px;
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
             cursor: pointer;
             border-radius: 5px;
+            transition: all 0.2s;
         }
-
         .playlist-item:hover {
-            background: #f0f0f0;
+            background: #2a2a2a;
         }
-
         .playlist-item.active {
-            background: #e0e0e0;
-            font-weight: bold;
+            background: #333;
+            font-weight: 600;
         }
-
-        progress {
-            width: 100%;
-            margin: 10px 0;
+        .playlist-item-number {
+            margin-right: 15px;
+            color: #b3b3b3;
+            width: 20px;
+        }
+        .playlist-item-info {
+            flex-grow: 1;
+        }
+        .playlist-item-title {
+            font-size: 16px;
+        }
+        .playlist-item-artist {
+            font-size: 14px;
+            color: #b3b3b3;
+        }
+        .playlist-item-duration {
+            color: #b3b3b3;
         }
     </style>
 </head>
-
 <body>
     <div class="player-container">
-        <img id="coverArt" class="cover-art" src="cover1.jpg" alt="Album Cover">
-
+        <div class="cover-art-container">
+            <img id="coverArt" class="cover-art" src="cover1.jpg" alt="Album Cover">
+        </div>
+        
         <div class="track-info">
-            <h2 id="songTitle">Select a song</h2>
-            <p id="artist">Artist Name</p>
+            <div class="song-title" id="songTitle">Select a song</div>
+            <div class="artist" id="artist">Artist Name</div>
         </div>
-
-        <audio id="audioPlayer" controls></audio>
-
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="time-info">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+        
         <div class="controls">
-            <button id="prevBtn">Previous</button>
-            <button id="playBtn">Play</button>
-            <button id="pauseBtn">Pause</button>
-            <button id="nextBtn">Next</button>
+            <button class="control-btn skip-btn" id="skipBack10Btn" title="Skip back 10 seconds">
+                ↻ 10s
+            </button>
+            <button class="control-btn" id="prevBtn" title="Previous track">
+                ⏮
+            </button>
+            <button class="control-btn large" id="playBtn" title="Play">
+                ▶
+            </button>
+            <button class="control-btn large" id="pauseBtn" title="Pause" style="display: none;">
+                ⏸
+            </button>
+            <button class="control-btn" id="nextBtn" title="Next track">
+                ⏭
+            </button>
+            <button class="control-btn skip-btn" id="skipForward10Btn" title="Skip forward 10 seconds">
+                ↺ 10s
+            </button>
         </div>
-
+        
         <div class="playlist" id="playlist">
             <!-- Playlist items will be added by JavaScript -->
         </div>
+
+        <audio id="audioPlayer"></audio>
     </div>
 
     <script>
@@ -113,97 +191,113 @@
                 title: "attack ON titan",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "1 attack ON titan.mp3"
+                audio: "1 attack ON titan.mp3",
+                duration: "4:16"
             }
             , {
                 title: "The Reluctant Heroes",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "2 The Reluctant Heroes.mp3"
+                audio: "2 The Reluctant Heroes.mp3",
+                duration: "4:27"
             }
             , {
                 title: "eye-water",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "03 eye-water.mp3"
+                audio: "03 eye-water.mp3",
+                duration: "3:01"
             }
             , {
                 title: "Rittai Kidou",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "4 Rittai Kidou.mp3"
+                audio: "4 Rittai Kidou.mp3",
+                duration: "5:42"
             }
             , {
                 title: "counter・attack-mankind",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "5 counter・attack-mankind.mp3"
+                audio: "5 counter・attack-mankind.mp3",
+                duration: "6:06"
             }
             , {
                 title: "Aramy Attack",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "6 Aramy Attack.mp3"
+                audio: "6 Aramy Attack.mp3",
+                duration: "3:26"
             }
             , {
                 title: "Vogel im Kafig",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "7 Vogel im Kafig.mp3"
+                audio: "7 Vogel im Kafig.mp3",
+                duration: "4:21"
             }
             , {
                 title: "DOA",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "8 DOA.mp3"
+                audio: "8 DOA.mp3",
+                duration: "5:42"
             }
             , {
                 title: "Kyojin Shinko",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "9 Kyojin Shinko.mp3"
+                audio: "9 Kyojin Shinko.mp3",
+                duration: "5:15"
             }
             , {
                 title: "E.M.A",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "10 E.M.A.mp3"
+                audio: "10 E.M.A.mp3",
+                duration: "3:56"
             }
             , {
                 title: "Megata Kyojin Kuchiku",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "11 Megata Kyojin Kuchiku.mp3"
+                audio: "11 Megata Kyojin Kuchiku.mp3",
+                duration: "6:47"
             }
             , {
                 title: "Bauklotze",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "12 Bauklotze.mp3"
+                audio: "12 Bauklotze.mp3",
+                duration: "6:37"
             }
             , {
                 title: "2 Chi Jou",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "13 2 Chi Jou.mp3"
+                audio: "13 2 Chi Jou.mp3",
+                duration: "4:28"
             }
             , {
                 title: "XL-TT",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "14 XL-TT.mp3"
+                audio: "14 XL-TT.mp3",
+                duration: "6:37"
             }
             , {
                 title: "Call your name",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "15 Call your name.mp3"
+                audio: "15 Call your name.mp3",
+                duration: "4:28"
             }
             , {
                 title: "omake-pfadlib",
                 artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
                 cover: "cover.jpg",
-                audio: "16 omake-pfadlib.mp3"
+                audio: "16 omake-pfadlib.mp3",
+                duration: "3:31"
             }
             // Add more tracks as needed
         ];
@@ -217,16 +311,53 @@
         const pauseBtn = document.getElementById('pauseBtn');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
+        const skipBack10Btn = document.getElementById('skipBack10Btn');
+        const skipForward10Btn = document.getElementById('skipForward10Btn');
+        const progressBar = document.getElementById('progressBar');
+        const progress = document.getElementById('progress');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationEl = document.getElementById('duration');
         const playlistElement = document.getElementById('playlist');
 
         let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        // Format time (seconds to MM:SS)
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const { duration, currentTime } = audioPlayer;
+            const progressPercent = (currentTime / duration) * 100;
+            progress.style.width = `${progressPercent}%`;
+            currentTimeEl.textContent = formatTime(currentTime);
+        }
+
+        // Set progress bar when clicked
+        function setProgress(e) {
+            const width = this.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
 
         // Initialize playlist
         function initPlaylist() {
             playlist.forEach((track, index) => {
                 const item = document.createElement('div');
                 item.className = 'playlist-item';
-                item.textContent = `${track.title}`;
+                item.innerHTML = `
+                    <div class="playlist-item-number">${index + 1}</div>
+                    <div class="playlist-item-info">
+                        <div class="playlist-item-title">${track.title}</div>
+                        <div class="playlist-item-artist">${track.artist}</div>
+                    </div>
+                    <div class="playlist-item-duration">${track.duration}</div>
+                `;
                 item.addEventListener('click', () => {
                     playTrack(index);
                 });
@@ -239,16 +370,20 @@
             if (index >= 0 && index < playlist.length) {
                 currentTrackIndex = index;
                 const track = playlist[index];
-
+                
                 // Update UI
                 songTitle.textContent = track.title;
                 artist.textContent = track.artist;
                 coverArt.src = track.cover;
-
+                
                 // Set audio source
                 audioPlayer.src = track.audio;
-                audioPlayer.play();
-
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    playBtn.style.display = 'none';
+                    pauseBtn.style.display = 'block';
+                });
+                
                 // Update active playlist item
                 document.querySelectorAll('.playlist-item').forEach((item, i) => {
                     if (i === index) {
@@ -278,17 +413,56 @@
             playTrack(prevIndex);
         }
 
+        // Skip forward
+        function skipForward(seconds = 10) {
+            audioPlayer.currentTime = Math.min(
+                audioPlayer.currentTime + seconds, 
+                audioPlayer.duration
+            );
+        }
+
+        // Skip backward
+        function skipBackward(seconds = 10) {
+            audioPlayer.currentTime = Math.max(
+                audioPlayer.currentTime - seconds, 
+                0
+            );
+        }
+
+        // Toggle play/pause
+        function togglePlay() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+                playBtn.style.display = 'block';
+                pauseBtn.style.display = 'none';
+            } else {
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    playBtn.style.display = 'none';
+                    pauseBtn.style.display = 'block';
+                });
+            }
+        }
+
         // Event listeners
-        playBtn.addEventListener('click', () => {
-            audioPlayer.play();
-        });
-
-        pauseBtn.addEventListener('click', () => {
-            audioPlayer.pause();
-        });
-
+        playBtn.addEventListener('click', togglePlay);
+        pauseBtn.addEventListener('click', togglePlay);
         nextBtn.addEventListener('click', nextTrack);
         prevBtn.addEventListener('click', prevTrack);
+        skipForward10Btn.addEventListener('click', () => skipForward(10));
+        skipBack10Btn.addEventListener('click', () => skipBackward(10));
+
+        // Progress bar click
+        progressBar.addEventListener('click', setProgress);
+
+        // Time updates
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+
+        // When metadata is loaded (duration available)
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audioPlayer.duration);
+        });
 
         // When current track ends, play next
         audioPlayer.addEventListener('ended', nextTrack);
@@ -298,5 +472,4 @@
         playTrack(0); // Start with first track
     </script>
 </body>
-
 </html>
