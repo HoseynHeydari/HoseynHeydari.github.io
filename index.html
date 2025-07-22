@@ -1,421 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Players Table View</title>
+    <title>Multi-Track Music Player</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            color: white;
+            background: #f5f5f5;
         }
-        
-        .players-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        .player-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
-        .players-table th {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 12px;
-            text-align: left;
-        }
-        
-        .players-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            vertical-align: middle;
-        }
-        
-        .players-table tr:hover {
-            background-color: rgba(0, 0, 0, 0.2);
-        }
-        
+
         .cover-art {
-            width: 60px;
-            height: 60px;
-            border-radius: 5px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-        
-        .song-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .song-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        
-        .artist {
-            font-size: 14px;
-            color: #aaa;
-        }
-        
-        .controls button {
-            background: #4CAF50;
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            margin: 0 5px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .controls button:hover {
-            background: #45a049;
-        }
-        
-        audio {
             width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        .track-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background: #4a76a8;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3a5f8a;
+        }
+
+        .playlist {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .playlist-item {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .playlist-item:hover {
+            background: #f0f0f0;
+        }
+
+        .playlist-item.active {
+            background: #e0e0e0;
+            font-weight: bold;
+        }
+
+        progress {
+            width: 100%;
+            margin: 10px 0;
         }
     </style>
 </head>
+
 <body>
-    <h1>AOT SOT Library</h1>
-    
-    <table class="players-table">
-        <thead>
-            <tr>
-                <th>Cover</th>
-                <th>Song Info</th>
-                <th>Player</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Player 1 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">attack ON titan</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="1 attack ON titan.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 2 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">The Reluctant Heroes</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="2 The Reluctant Heroes.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
+    <div class="player-container">
+        <img id="coverArt" class="cover-art" src="cover1.jpg" alt="Album Cover">
 
-            <!-- Player 3 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">eye-water</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="03 eye-water.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 4 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Rittai Kidou</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="4 Rittai Kidou.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
+        <div class="track-info">
+            <h2 id="songTitle">Select a song</h2>
+            <p id="artist">Artist Name</p>
+        </div>
 
-            <!-- Player 5 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">counter・attack-mankind</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="5 counter・attack-mankind.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 6 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Aramy Attack</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="6 Aramy Attack.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
+        <audio id="audioPlayer" controls></audio>
 
-            <!-- Player 7 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Vogel im Kafig</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="7 Vogel im Kafig.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 8 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">DOA</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="8 DOA.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
+        <div class="controls">
+            <button id="prevBtn">Previous</button>
+            <button id="playBtn">Play</button>
+            <button id="pauseBtn">Pause</button>
+            <button id="nextBtn">Next</button>
+        </div>
 
-            <!-- Player 9 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Kyojin Shinko</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="9 Kyojin Shinko.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 10 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">E.M.A</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="10 E.M.A.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-
-            <!-- Player 11 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Megata Kyojin Kuchiku</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="11 Megata Kyojin Kuchiku.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 12 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Bauklotze</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="12 Bauklotze.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-
-            <!-- Player 13 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">2 Chi Jou</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="13 2 Chi Jou.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 14 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">XL-TT</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="14 XL-TT.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-
-            <!-- Player 15 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">Call your name</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player1" controls>
-                        <source src="15 Call your name.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-            
-            <!-- Player 16 -->
-            <tr>
-                <td>
-                    <img src="cover.jpg" alt="Album Cover" class="cover-art">
-                </td>
-                <td>
-                    <div class="song-info">
-                        <div>
-                            <div class="song-title">omake-pfadlib</div>
-                            <div class="artist">Hiroyuki Sawano, MIKA KOBAYASHI</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                    <audio id="player2" controls>
-                        <source src="16 omake-pfadlib.mp3" type="audio/mpeg">
-                    </audio>
-                </td>
-            </tr>
-
-            <!-- Add more players as needed -->
-        </tbody>
-    </table>
+        <div class="playlist" id="playlist">
+            <!-- Playlist items will be added by JavaScript -->
+        </div>
+    </div>
 
     <script>
-        // You can add JavaScript for more advanced functionality
-        // This simple version uses inline onclick handlers
+        // Music playlist data
+        const playlist = [
+            {
+                title: "attack ON titan",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "1 attack ON titan.mp3"
+            }
+            , {
+                title: "The Reluctant Heroes",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "2 The Reluctant Heroes.mp3"
+            }
+            , {
+                title: "eye-water",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "03 eye-water.mp3"
+            }
+            , {
+                title: "Rittai Kidou",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "4 Rittai Kidou.mp3"
+            }
+            , {
+                title: "counter・attack-mankind",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "5 counter・attack-mankind.mp3"
+            }
+            , {
+                title: "Aramy Attack",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "6 Aramy Attack.mp3"
+            }
+            , {
+                title: "Vogel im Kafig",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "7 Vogel im Kafig.mp3"
+            }
+            , {
+                title: "DOA",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "8 DOA.mp3"
+            }
+            , {
+                title: "Kyojin Shinko",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "9 Kyojin Shinko.mp3"
+            }
+            , {
+                title: "E.M.A",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "10 E.M.A.mp3"
+            }
+            , {
+                title: "Megata Kyojin Kuchiku",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "11 Megata Kyojin Kuchiku.mp3"
+            }
+            , {
+                title: "Bauklotze",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "12 Bauklotze.mp3"
+            }
+            , {
+                title: "2 Chi Jou",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "13 2 Chi Jou.mp3"
+            }
+            , {
+                title: "XL-TT",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "14 XL-TT.mp3"
+            }
+            , {
+                title: "Call your name",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "15 Call your name.mp3"
+            }
+            , {
+                title: "omake-pfadlib",
+                artist: "Hiroyuki Sawano, MIKA KOBAYASHI",
+                cover: "cover.jpg",
+                audio: "16 omake-pfadlib.mp3"
+            }
+            // Add more tracks as needed
+        ];
+
+        // Player elements
+        const audioPlayer = document.getElementById('audioPlayer');
+        const coverArt = document.getElementById('coverArt');
+        const songTitle = document.getElementById('songTitle');
+        const artist = document.getElementById('artist');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const playlistElement = document.getElementById('playlist');
+
+        let currentTrackIndex = 0;
+
+        // Initialize playlist
+        function initPlaylist() {
+            playlist.forEach((track, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.textContent = `${track.title}`;
+                item.addEventListener('click', () => {
+                    playTrack(index);
+                });
+                playlistElement.appendChild(item);
+            });
+        }
+
+        // Play a specific track
+        function playTrack(index) {
+            if (index >= 0 && index < playlist.length) {
+                currentTrackIndex = index;
+                const track = playlist[index];
+
+                // Update UI
+                songTitle.textContent = track.title;
+                artist.textContent = track.artist;
+                coverArt.src = track.cover;
+
+                // Set audio source
+                audioPlayer.src = track.audio;
+                audioPlayer.play();
+
+                // Update active playlist item
+                document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                    if (i === index) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Play next track
+        function nextTrack() {
+            let nextIndex = currentTrackIndex + 1;
+            if (nextIndex >= playlist.length) {
+                nextIndex = 0; // Loop to beginning
+            }
+            playTrack(nextIndex);
+        }
+
+        // Play previous track
+        function prevTrack() {
+            let prevIndex = currentTrackIndex - 1;
+            if (prevIndex < 0) {
+                prevIndex = playlist.length - 1; // Loop to end
+            }
+            playTrack(prevIndex);
+        }
+
+        // Event listeners
+        playBtn.addEventListener('click', () => {
+            audioPlayer.play();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+        });
+
+        nextBtn.addEventListener('click', nextTrack);
+        prevBtn.addEventListener('click', prevTrack);
+
+        // When current track ends, play next
+        audioPlayer.addEventListener('ended', nextTrack);
+
+        // Initialize
+        initPlaylist();
+        playTrack(0); // Start with first track
     </script>
 </body>
+
 </html>
